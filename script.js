@@ -78,8 +78,8 @@ function fetchBookmarks() {
     // Create bookmarks array in localStorage
     bookmarks = [
       {
-        name: 'Jacinto Design',
-        url: 'http://jacinto.design',
+        name: 'Gregory Mehlhorn Portfolio',
+        url: 'https://gregory-mehlhorn.de/',
       },
     ];
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
