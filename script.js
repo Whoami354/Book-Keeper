@@ -10,8 +10,8 @@ let bookmarks = [];
 
 // Show Modal, Focus on Input
 function showModal() {
-  modal.classList.add('show-modal');
-  websiteNameEl.focus();
+    modal.classList.add('show-modal');
+    websiteNameEl.focus();
 }
 
 // Modal Event Listeners
@@ -21,26 +21,26 @@ window.addEventListener('click', (e) => (e.target === modal ? modal.classList.re
 
 // Validate Form
 function validate(nameValue, urlValue) {
-  const expression = /(https)?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g;
-  const regex = new RegExp(expression);
-  if (!nameValue || !urlValue) {
-    alert('Please submit values for both fields.');
-    return false;
-  }
-  if (!urlValue.match(regex)) {
-    alert('Please provide a valid web address.');
-    return false;
-  }
-  // Valid
-  return true;
+    const expression = /(https)?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g;
+    const regex = new RegExp(expression);
+    if (!nameValue || !urlValue) {
+        alert('Please submit values for both fields.');
+        return false;
+    }
+    if (!urlValue.match(regex)) {
+        alert('Please provide a valid web address.');
+        return false;
+    }
+    // Valid
+    return true;
 }
 
 // Build Bookmarks
 function buildBookmarks() {
   // Remove all bookmark elements
-  bookmarksContainer.textContent = '';
+    bookmarksContainer.innerText = '';
   // Build items
-  bookmarks.forEach((bookmark) => {
+    bookmarks.forEach((bookmark) => {
     const { name, url } = bookmark;
     // Item
     const item = document.createElement('div');
@@ -61,68 +61,68 @@ function buildBookmarks() {
     const link = document.createElement('a');
     link.setAttribute('href', `${url}`);
     link.setAttribute('target', '_blank');
-    link.textContent = name;
+    link.innerText = name;
     // Append to bookmarks container
     linkInfo.append(favicon, link);
     item.append(closeIcon, linkInfo);
     bookmarksContainer.appendChild(item);
-  });
+    });
 }
 
 // Fetch bookmarks
 function fetchBookmarks() {
-  // Get bookmarks from localStorage if available
-  if (localStorage.getItem('bookmarks')) {
-    bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-  } else {
+    // Get bookmarks from localStorage if available
+    if (localStorage.getItem('bookmarks')) {
+        bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+    } else {
     // Create bookmarks array in localStorage
     bookmarks = [
-      {
-        name: 'Gregory Mehlhorn Portfolio',
+        {
+        name: 'Gregory Mehlhorn',
         url: 'https://gregory-mehlhorn.de/',
-      },
+        },
     ];
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-  }
-  buildBookmarks();
+    }
+    buildBookmarks();
 }
 
 // Delete Bookmark
 function deleteBookmark(url) {
   // Loop through the bookmarks array
-  bookmarks.forEach((bookmark, i) => {
-    if (bookmark.url === url) {
-      bookmarks.splice(i, 1);
-    }
-  });
-  // Update bookmarks array in localStorage, re-populate DOM
-  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-  fetchBookmarks();
+    bookmarks.forEach((bookmark, i) => {
+        if (bookmark.url === url) {
+            bookmarks.splice(i, 1);
+        }
+    });
+    // Update bookmarks array in localStorage, re-populate DOM
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    fetchBookmarks();
 }
 
 function storeBookmark(e) {
-  e.preventDefault();
-  const nameValue = websiteNameEl.value;
-  let urlValue = websiteUrlEl.value;
-  // Add 'https://' if not there
-  if (!urlValue.includes('https://') && !urlValue.includes('http://')) {
-    urlValue = `https://${urlValue}`;
-  }
-  // Validate
-  if (!validate(nameValue, urlValue)) {
-    return false;
-  }
-  // Set bookmark object, add to array
-  const bookmark = {
-    name: nameValue,
-    url: urlValue,
-  };
-  bookmarks.push(bookmark);
-  // Set bookmarks in localStorage, fetch, reset input fields
-  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-  fetchBookmarks();
-  bookmarkForm.reset();
-  websiteNameEl.focus();
+    e.preventDefault();
+    const nameValue = websiteNameEl.value;
+    let urlValue = websiteUrlEl.value;
+    // Add 'https://' if not there
+    if (!urlValue.includes('https://') && !urlValue.includes('http://')) {
+        urlValue = `https://${urlValue}`;
+    }
+    // Validate
+    if (!validate(nameValue, urlValue)) {
+        return false;
+    }
+    // Set bookmark object, add to array
+    const bookmark = {
+        name: nameValue,
+        url: urlValue,
+    };
+    bookmarks.push(bookmark);
+    // Set bookmarks in localStorage, fetch, reset input fields
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    fetchBookmarks();
+    bookmarkForm.reset();
+    websiteNameEl.focus();
 }
 
 // Event Listener
